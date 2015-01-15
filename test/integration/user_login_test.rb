@@ -43,4 +43,14 @@ class UserLoginTest < ActionDispatch::IntegrationTest
       assert page.has_content?(idea.title)
     end
   end
+
+  test 'a user can logout' do
+    ApplicationController.any_instance.stubs(:current_user).returns(user)
+    visit user_path(user)
+    click_link_or_button('Logout')
+    assert_equal current_path, login_path
+    within('#flash_notice') do
+      assert page.has_content?('Logout was successful')
+    end
+  end
 end
