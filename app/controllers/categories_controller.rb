@@ -1,9 +1,7 @@
 class CategoriesController < ApplicationController
   def new
-    # require 'pry'; binding.pry
-    @user = User.find(session[:user_id])
-
-    # authorize! :manage, @user
+    @user = User.find(current_user.id)
+    authorize! :manage, @user
   end
 
   def create

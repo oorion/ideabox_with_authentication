@@ -26,8 +26,6 @@ class IdeaCategoriesTest < ActionDispatch::IntegrationTest
     ApplicationController.any_instance.stubs(:current_user).returns(admin)
     visit new_category_path
     fill_in 'category[name]', with: 'Sports'
-    # save_and_open_page
-
     click_link_or_button 'Create Category'
     assert_equal current_path, categories_path
     within '#categories' do
