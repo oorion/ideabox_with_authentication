@@ -35,11 +35,12 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     assert_equal current_path, login_path
   end
 
-  test 'test user has ideas' do
-    ApplicationController.any_instance.stub(:current_user).returns(user)
+  test 'test user is shown their ideas upon login' do
+    ApplicationController.any_instance.stubs(:current_user).returns(user)
+    idea = Idea.create(title: 'some idea', description: 'blah', user_id: user.id)
     visit user_path(user)
     within '#ideas' do
-      assert page.has_content?('some idea')
+      assert page.has_content?(idea.title)
     end
   end
 end
